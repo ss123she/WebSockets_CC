@@ -4,7 +4,7 @@
         <script>
             const ws = new WebSocket("ws://localhost:8081")
             function moveTurtleForward(){
-                ws.send("return turtle.forward()")
+                ws.send("return term.write()")
             }
             function moveTurtleRight(){
                 ws.send("return turtle.turnRight()")
