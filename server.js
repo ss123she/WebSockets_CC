@@ -1,28 +1,22 @@
-const ws = require("ws")
-const wss = new ws.Server({port:8081})
-const express = require('express');
-const path = require('path');
-const http = require('http');
+  const setup = {port:8000}
+  const express = require ('express');
+  const app = express ();
 
-const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
-const server = http.createServer(app);
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(express.static('public'));
 
-const PORT = 8081;
+  app.get('/computer', (req, res) => {
+    res.sendFile(__dirname + '/public/computer.html');
+  });
 
-server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  app.post('/submit', (req, res) => {
+    const data = req.body.data;
+
+    console.log(`Полученные данные: ${data}`);
+
+    res.json({ message: 'Данные успешно отправлены!' });
 });
 
-wss.on("connection",ws=>{
-    console.log("connection!")
-    ws.on("message",msg=>{
-        wss.broadcast(JSON.stringify({func:msg.toString()}))
-    })
-});
-
-wss.broadcast = function broadcast(msg){
-    wss.clients.forEach(function each(client) {
-        client.send(msg)
-    });
-};
+  app.listen(setup.port, () => {
+    console.log('Сервер запущен: порт %s', setup.port);
+  });
