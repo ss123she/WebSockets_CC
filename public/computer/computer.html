@@ -14,14 +14,19 @@
         <label for="lname">Фамилия:</label>
         <input type="text" id="lname" name="lname"><br>
     
-        <button type="button" onclick="submitForm()">Отправить на сервер</button>
+        <button type="submit">Отправить на сервер</button>
     </form>
 
     <script>
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+            submitForm();
+        });
+
         function submitForm() {
             var formData = new FormData(document.getElementById("myForm"));
 
-            fetch("/example", {
+            fetch("/computer", {
                 method: "POST",
                 body: formData
             })
