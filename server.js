@@ -33,10 +33,6 @@ app.get('/computer', (req, res) => {
     res.sendFile(__dirname + '/public/computer/computer.html');
 });
 
-app.get('/nigas', (req, res) => {
-    res.sendFile(__dirname + '/public/nigas/nigas.html');
-});
-
 app.get('/gta', (req, res) => {
     res.sendFile(__dirname + '/public/gta/gta.html');
 });
