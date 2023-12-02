@@ -11,7 +11,7 @@
     <script>
         document.getElementById('runScriptButton').addEventListener('click', function() {
             // Выполнить запрос на сервер, чтобы запустить скрипт Node.js
-            fetch('/run-script', { method: 'POST' })
+            fetch('/button1', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch(error => console.error(error));

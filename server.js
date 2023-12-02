@@ -1,6 +1,7 @@
 const setup = { port: 8000 };
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -14,8 +15,8 @@ app.get('/gta', (req, res) => {
     res.sendFile(__dirname + '/public/gta/gta.html');
 });
 
-app.post('/run-script', (req, res) => {
-    console.log('succes');
+app.post('/button1', (req, res) => {
+    console.log('success');
 });
 app.listen(setup.port, () => {
     console.log('Сервер запущен: порт %s', setup.port);
