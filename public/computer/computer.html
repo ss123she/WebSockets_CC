@@ -7,6 +7,7 @@
 </head>
 <body>
     <button id="runScriptButton">Запустить скрипт Node.js</button>
+    <div id="updateable-content"></div>
 
     <script>
         document.getElementById('runScriptButton').addEventListener('click', function() {
@@ -15,6 +16,20 @@
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch(error => console.error(error));
+        });
+        const ws = new WebSocket('ws://51.250.0.4:9000'); // Поменяйте на ваш адрес сервера
+
+        ws.addEventListener('open', (event) => {
+            console.log('WebSocket connection opened');
+        });
+
+        ws.addEventListener('message', (event) => {
+            const updateableContent = document.getElementById('updateable-content');
+            updateableContent.innerHTML = event.data;
+        });
+
+        ws.addEventListener('close', (event) => {
+            console.log('WebSocket connection closed');
         });
     </script>
 </body>

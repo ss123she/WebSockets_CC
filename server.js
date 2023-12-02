@@ -1,29 +1,11 @@
-const setup = { port: 8000 };
+// index.js
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const ws = require('ws');
-const wsServer = new ws.Server({ port: 9000 });
+const { startWebSocketServer } = require('./websocketModule');
 
-let users = 0;
-
-wsServer.on('connection', function (ws) {
-    console.log("пользователь " + users + " подключился");
-    users++;
-    console.log("current users: " + users);
-
-    // You may want to store the `ws` object for each connected client in a set or array if needed.
-});
-
-wsServer.on('error', function (error) {
-    console.error("Error with WebSocket connection:", error);
-});
-
-wsServer.on('close', function () {
-    console.log("WebSocket connection closed")
-    users = users - 1;
-    console.log("current users: " + users);
-});
+const setup = { port: 8000 };
+const wsPort = 9000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -37,13 +19,17 @@ app.get('/gta', (req, res) => {
     res.sendFile(__dirname + '/public/gta/gta.html');
 });
 
+// Добавим WebSocket сервер внутри express сервера
+const wsServer = startWebSocketServer(wsPort);
+
 app.post('/button1', (req, res) => {
     console.log('success');
 
-    const data = 'term.write("nigas")';
+    const data = 'print("ok")';
 
-    wsServer.clients.forEach(client => {
-        if (client.readyState === ws.OPEN) {
+    // Отправка сообщения на все подключенные клиенты по WebSocket
+    wsServer.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
             client.send(data);
         }
     });
@@ -52,5 +38,5 @@ app.post('/button1', (req, res) => {
 });
 
 app.listen(setup.port, () => {
-    console.log('Сервер запущен: порт %s', setup.port);
+    console.log('Server running on port %s', setup.port);
 });
