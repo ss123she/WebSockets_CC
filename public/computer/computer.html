@@ -3,40 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест</title>
+    <title>Простая кнопка</title>
 </head>
 <body>
-    <h1>Тестовая кнопка</h1>
-    <form action="/computer" method="POST" id="myForm">
-        <label for="fname">Имя:</label>
-        <input type="text" id="fname" name="fname"><br>
-        
-        <label for="lname">Фамилия:</label>
-        <input type="text" id="lname" name="lname"><br>
-    
-        <button type="submit">Отправить на сервер</button>
-    </form>
+    <button id="runScriptButton">Запустить скрипт Node.js</button>
 
     <script>
-        document.getElementById('myForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
-            submitForm();
+        document.getElementById('runScriptButton').addEventListener('click', function() {
+            // Выполнить запрос на сервер, чтобы запустить скрипт Node.js
+            fetch('/run-script', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
         });
-
-        function submitForm() {
-            var formData = new FormData(document.getElementById("myForm"));
-
-            fetch("/computer", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Response from server:", data);
-                // Дополнительные действия при необходимости
-            })
-            .catch(error => console.error("Error:", error));
-        }
     </script>
 </body>
 </html>
