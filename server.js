@@ -8,7 +8,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.post('/computer', (req, res) => {
-    console.log(`Full name is:${req.body.fname} ${req.body.lname}.`);
+    const firstName = req.body.fname;
+    const lastName = req.body.lname;
+
+    res.json({ status: 'success', message: 'Data received successfully.' });
+    console.log("recieved " + firstName + " " + lastName)
 });
 
 app.get('/computer', (req, res) => {
