@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.post('/computer', (req, res) => {
-    res.send(`Full name is:${req.body.fname} ${req.body.lname}.`);
+    console.log(`Full name is:${req.body.fname} ${req.body.lname}.`);
 });
 
 app.get('/computer', (req, res) => {
